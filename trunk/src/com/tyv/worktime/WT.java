@@ -107,7 +107,14 @@ public class WT extends Activity {
     public boolean onCreateOptionsMenu(Menu menu)    { 
        super.onCreateOptionsMenu(menu); 
        int base=Menu.FIRST; // value is 1 
-       MenuItem item1 = menu.add(base,base,base,"Test"); 
+       MenuItem item1 = menu.add(base,base,base,"Подробный отчет")
+       //.setShortcut('1', 'd')
+       .setIcon(android.R.drawable.ic_dialog_info);
+       base++;
+       MenuItem item2 = menu.add(base,base,base,"Подробный отчет2")
+       //.setShortcut('1', 'd')
+       .setIcon(android.R.drawable.ic_input_get);       
+       
        return true; 
     } 
      
