@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<Button
+    android:id="@+id/refrbutton" 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal|center"
+    android:textSize="30px"
+    android:padding="20px"
+    android:layout_marginTop="10dip"
+    android:text="Входим на работу"
+    />
+<Button
+    android:id="@+id/refrbutton2" 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal|center"
+    android:textSize="30px"
+    android:padding="20px"
+    android:layout_marginTop="10dip"
+    android:text="Выходим с работы"
+    />        
+<TextView 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/hello"
+    android:textSize="50dip"
+    android:gravity="center_horizontal"
+    android:id="@+id/temper"
+    android:textColor="#EEE3C4"
+    />
+</LinearLayout>
