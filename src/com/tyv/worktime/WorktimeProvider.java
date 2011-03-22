@@ -167,7 +167,11 @@ public class WorktimeProvider extends ContentProvider {
 	  public static final String KEY_ID = "_id";
 	  public static final String KEY_DATE = "date";
 	  public static final String KEY_DETAILS = "details";
-
+      /**
+       * The default sort order for this table
+       */
+      public static final String DEFAULT_SORT_ORDER = "date DESC";
+      
 	  // Column indexes
 	  public static final int DATE_COLUMN = 1;
 	  public static final int DETAILS_COLUMN = 2;
