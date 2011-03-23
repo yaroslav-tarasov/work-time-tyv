@@ -10,8 +10,11 @@ import com.tyv.worktime.R;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.view.KeyEvent;
@@ -122,6 +125,10 @@ public class WT extends Activity {
     public boolean onOptionsItemSelected(MenuItem item)   { 
        if (item.getItemId() == 1)       { 
           //IntentUtils.tryOneOfThese(this); 
+           // Uri uri = ContentUris.withAppendedId(getIntent().getData(), id);
+    	   Uri uri = getIntent().getData();
+           String action = getIntent().getAction();
+           startActivity(new Intent(Intent.ACTION_VIEW, uri));
        } 
        else { 
          return super.onOptionsItemSelected(item); 

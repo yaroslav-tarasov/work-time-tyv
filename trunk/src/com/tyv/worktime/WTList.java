@@ -23,6 +23,7 @@ public class WTList extends ListActivity {
     private static final String[] PROJECTION = new String[] {
             WorktimeProvider.KEY_ID, // 0
             WorktimeProvider.KEY_DATE, // 1
+            WorktimeProvider.KEY_DETAILS, // 2
     };
 
     /** The index of the title column */
