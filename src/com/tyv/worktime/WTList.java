@@ -3,7 +3,9 @@ package com.tyv.worktime;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.SimpleCursorAdapter;
 
@@ -37,11 +39,23 @@ public class WTList extends ListActivity {
 
         // If no data was given in the intent (because we were started
         // as a MAIN activity), then use our default content provider.
-        Intent intent = getIntent();
-        if (intent.getData() == null) {
-            intent.setData(WorktimeProvider.CONTENT_URI);
-        }
 
+        final Intent intent = getIntent();
+
+        // Do some setup based on the action being performed.
+
+        final String action = intent.getAction();
+        if (Intent.ACTION_VIEW.equals(action)) {
+            // Requested to edit: set that state, and the data being edited.
+            // mState = STATE_EDIT;
+            Uri mUri = intent.getData();
+        } else {
+            // Whoops, unknown action!  Bail.
+            Log.e(TAG, "Unknown action, exiting");
+            finish();
+            return;
+        }
+        
         // Inform the list we provide context menus for items
         getListView().setOnCreateContextMenuListener(this);
         

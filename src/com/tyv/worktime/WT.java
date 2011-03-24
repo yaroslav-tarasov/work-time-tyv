@@ -54,6 +54,13 @@ public class WT extends Activity {
             }
         });   
         
+        // If no data was given in the intent (because we were started
+        // as a MAIN activity), then use our default content provider.
+        Intent intent = getIntent();
+        if (intent.getData() == null) {
+            intent.setData(WorktimeProvider.CONTENT_URI);
+        }
+        
 //        WTListView = (ListView)this.findViewById(R.id.WTListView);
 
 //        WTListView.setOnItemClickListener(new OnItemClickListener() {
@@ -125,10 +132,13 @@ public class WT extends Activity {
     public boolean onOptionsItemSelected(MenuItem item)   { 
        if (item.getItemId() == 1)       { 
           //IntentUtils.tryOneOfThese(this); 
-           // Uri uri = ContentUris.withAppendedId(getIntent().getData(), id);
-    	   Uri uri = getIntent().getData();
-           String action = getIntent().getAction();
-           startActivity(new Intent(Intent.ACTION_VIEW, uri));
+           // Uri uri = ContentUris.withAppendedId(getIntent().getData(), item.getItemId());
+    	   // Uri uri = getIntent().getData();
+           // String action = getIntent().getAction();
+           /// startActivity(new Intent(Intent.ACTION_VIEW, uri));
+    	   
+    	   Intent di = new Intent(this, WTList.class);
+    	   this.startActivity(di);
        } 
        else { 
          return super.onOptionsItemSelected(item); 
