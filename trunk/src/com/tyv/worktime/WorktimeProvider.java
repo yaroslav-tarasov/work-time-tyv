@@ -15,7 +15,17 @@ import android.util.Log;
 public class WorktimeProvider extends ContentProvider {
 	
 	public static final Uri CONTENT_URI = Uri.parse("content://com.tyv.provider.WT/worktime");
-	
+    
+	/**
+     * The MIME type of {@link #CONTENT_URI} providing a directory of notes.
+     */
+    public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.tyv.WT";
+
+    /**
+     * The MIME type of a {@link #CONTENT_URI} sub-directory of a single note.
+     */
+    public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.tyv.WT";
+    
 	
 	@Override
 	public int delete(Uri uri, String where, String[] whereArgs) {

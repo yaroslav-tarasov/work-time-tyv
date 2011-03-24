@@ -16,7 +16,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="vnd.android.cursor.dir/vnd.google.note" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.tyv.WT"/>
             </intent-filter>
         </activity>
     </application>
