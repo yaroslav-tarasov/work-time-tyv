@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.SimpleCursorAdapter;
+import android.widget.SimpleCursorAdapter.CursorToStringConverter;
 
 
 
@@ -45,16 +46,18 @@ public class WTList extends ListActivity {
         // Do some setup based on the action being performed.
 
         final String action = intent.getAction();
-        if (Intent.ACTION_VIEW.equals(action)) {
-            // Requested to edit: set that state, and the data being edited.
-            // mState = STATE_EDIT;
-            Uri mUri = intent.getData();
-        } else {
-            // Whoops, unknown action!  Bail.
-            Log.e(TAG, "Unknown action, exiting");
-            finish();
-            return;
-        }
+//        if (Intent.ACTION_VIEW.equals(action)) {
+//            // Requested to edit: set that state, and the data being edited.
+//            // mState = STATE_EDIT;
+//            Uri mUri = intent.getData();
+//        } else {
+//            // Whoops, unknown action!  Bail.
+//            Log.e(TAG, "Unknown action, exiting");
+//            finish();
+//            return;
+//        }
+        
+        Uri mUri = intent.getData();
         
         // Inform the list we provide context menus for items
         getListView().setOnCreateContextMenuListener(this);
@@ -63,10 +66,26 @@ public class WTList extends ListActivity {
         // when needed.
         Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null,
         		WorktimeProvider.DEFAULT_SORT_ORDER);
+        
+
+
+
 
         // Used to map notes entries from the database to views
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.wtlist_item, cursor,
-                new String[] { WorktimeProvider.KEY_DATE }, new int[] { android.R.id.text1 });
+                new String[] { WorktimeProvider.KEY_DATE, WorktimeProvider.KEY_DETAILS}, new int[] { android.R.id.text1,android.R.id.text2 });
+        
+        CursorToStringConverter converter = new CursorToStringConverter() {
+
+            @Override
+            public CharSequence convertToString(Cursor cursor) {
+               int desiredColumn = 1;
+               return cursor.getString(desiredColumn);
+            }
+         };   
+         
+         adapter.setCursorToStringConverter(converter);    
+        
         setListAdapter(adapter);
     }
     
