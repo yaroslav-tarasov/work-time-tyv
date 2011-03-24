@@ -133,11 +133,11 @@ public class WT extends Activity {
        if (item.getItemId() == 1)       { 
           //IntentUtils.tryOneOfThese(this); 
            // Uri uri = ContentUris.withAppendedId(getIntent().getData(), item.getItemId());
-    	   // Uri uri = getIntent().getData();
+    	   Uri uri = getIntent().getData();
            // String action = getIntent().getAction();
            /// startActivity(new Intent(Intent.ACTION_VIEW, uri));
     	   
-    	   Intent di = new Intent(this, WTList.class);
+    	   Intent di = new Intent(Intent.ACTION_VIEW, uri,this, WTList.class);
     	   this.startActivity(di);
        } 
        else { 
