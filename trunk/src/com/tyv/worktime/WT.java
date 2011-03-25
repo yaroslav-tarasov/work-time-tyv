@@ -43,14 +43,14 @@ public class WT extends Activity {
         button1.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) // клик на кнопку
             {
-                RefreshTemper(v);
+                newTimePoint(v);
             }
         });       
         final Button button2 = (Button) findViewById(R.id.button2);
         button2.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) // клик на кнопку
             {
-                RefreshTemper(v);
+                newTimePoint(v);
             }
         });   
         
@@ -140,12 +140,22 @@ public class WT extends Activity {
     	   Intent di = new Intent(Intent.ACTION_VIEW, uri,this, WTList.class);
     	   this.startActivity(di);
        } 
+       else if (item.getItemId() == 2)       { 
+          //IntentUtils.tryOneOfThese(this); 
+           // Uri uri = ContentUris.withAppendedId(getIntent().getData(), item.getItemId());
+    	   Uri uri = getIntent().getData();
+           // String action = getIntent().getAction();
+           /// startActivity(new Intent(Intent.ACTION_VIEW, uri));
+    	   
+    	   Intent di = new Intent(Intent.ACTION_VIEW, uri,this, ReportList.class);
+    	   this.startActivity(di);
+       } 
        else { 
          return super.onOptionsItemSelected(item); 
        } 
        return true; 
     }    
-    public void RefreshTemper(View v)
+    public void newTimePoint(View v)
     { 
     	
         final Button button1 = (Button) findViewById(R.id.button1);
@@ -191,7 +201,7 @@ public class WT extends Activity {
         for (ListIterator<TimePoint> iterator = timepoints.listIterator(timepoints.size()); iterator.hasPrevious();) {
         	TimePoint tp = iterator.previous();
         	Date dt = tp.getDate();
-        	if(dt.getDay() == now.getDay())
+        	if(dt.getDay() == now.getDay() && dt.getMonth() == now.getMonth() && dt.getYear() == now.getYear())
         	{
         		outext += tp.toString()  +  "\n"; //+ " wdtime= " +wdtime
         		if(ret.contentEquals("none"))
