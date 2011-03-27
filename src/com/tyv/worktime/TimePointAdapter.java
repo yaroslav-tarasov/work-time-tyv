@@ -31,6 +31,19 @@ public class TimePointAdapter extends ArrayAdapter<TimePoint> {
 	    TimePoint item = getItem(position);
 
 	    String taskString = item.getDetails().equals("Enter")?"Вход":"Выход";
+	    if(item.getDetails().equals("Enter"))
+	    {
+	    	taskString = "Вход";
+	    }
+	    else if(item.getDetails().equals("Exit"))
+	    {
+	    	taskString = "Выход";
+	    }
+	    else
+	    {
+	    	taskString = item.getDetails();
+	    }
+	    	
 	    Date createdDate = item.getDate();
 	    SimpleDateFormat sdf = new SimpleDateFormat("HH.mm dd-MMMM-yyyy");
 	    String dateString = sdf.format(createdDate);

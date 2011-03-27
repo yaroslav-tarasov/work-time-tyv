@@ -117,13 +117,18 @@ public class WT extends Activity {
     public boolean onCreateOptionsMenu(Menu menu)    { 
        super.onCreateOptionsMenu(menu); 
        int base=Menu.FIRST; // value is 1 
-       MenuItem item1 = menu.add(base,base,base,"Подробный отчет")
+       MenuItem item1 = menu.add(1,base,base,"Подробный отчет")
        //.setShortcut('1', 'd')
        .setIcon(android.R.drawable.ic_dialog_info);
        base++;
-       MenuItem item2 = menu.add(base,base,base,"Подробный отчет2")
+       MenuItem item2 = menu.add(1,base,base,"Подробный отчет2")
        //.setShortcut('1', 'd')
-       .setIcon(android.R.drawable.ic_input_get);       
+       .setIcon(android.R.drawable.ic_dialog_info);    
+       
+       base++;
+       MenuItem item3 = menu.add(2,base,base,"Подробный отчет3")
+       //.setShortcut('1', 'd')
+       .setIcon(android.R.drawable.ic_dialog_info);  
        
        return true; 
     } 
@@ -150,6 +155,16 @@ public class WT extends Activity {
     	   Intent di = new Intent(Intent.ACTION_VIEW, uri,this, ReportList.class);
     	   this.startActivity(di);
        } 
+       else if (item.getItemId() == 3)       { 
+           //IntentUtils.tryOneOfThese(this); 
+            // Uri uri = ContentUris.withAppendedId(getIntent().getData(), item.getItemId());
+     	   Uri uri = getIntent().getData();
+            // String action = getIntent().getAction();
+            /// startActivity(new Intent(Intent.ACTION_VIEW, uri));
+     	   
+     	   Intent di = new Intent(Intent.ACTION_VIEW, uri,this, WTAList.class);
+     	   this.startActivity(di);
+        }
        else { 
          return super.onOptionsItemSelected(item); 
        } 
@@ -201,7 +216,7 @@ public class WT extends Activity {
         for (ListIterator<TimePoint> iterator = timepoints.listIterator(timepoints.size()); iterator.hasPrevious();) {
         	TimePoint tp = iterator.previous();
         	Date dt = tp.getDate();
-        	if(dt.getDay() == now.getDay() && dt.getMonth() == now.getMonth() && dt.getYear() == now.getYear())
+        	if(dt.getDate() == now.getDate() && dt.getMonth() == now.getMonth() && dt.getYear() == now.getYear())
         	{
         		outext += tp.toString()  +  "\n"; //+ " wdtime= " +wdtime
         		if(ret.contentEquals("none"))
