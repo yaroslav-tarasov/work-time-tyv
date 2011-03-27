@@ -86,12 +86,13 @@ long wdtime = 0;
 long starttp = 0;
 long stoptp = now.getTime(); 
 Date dt_old = null;
+long created = 0;
 SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
 
 	  if (cursor.moveToFirst())
 	    do { 
 	      String task = cursor.getString(cursor.getColumnIndex(WorktimeProvider.KEY_DETAILS));
-	      long created = cursor.getLong(cursor.getColumnIndex(WorktimeProvider.KEY_DATE));
+	      created = cursor.getLong(cursor.getColumnIndex(WorktimeProvider.KEY_DATE));
 	      
 Date dt = new Date(created);
 
@@ -100,12 +101,14 @@ if(dt_old == null )
 	dt_old = dt;
 }
 
-if(dt_old != dt )
+if(dt_old.getDate() != dt.getDate())
 {
 	outext += "Время за день: " + sdf.format(wdtime - 3 * 60 * 60 * 1000);  
-	TimePoint newItem = new TimePoint( new Date(created),outext);
+	TimePoint newItem = new TimePoint( dt_old,outext);
 	tpItems.add(0, newItem);
 	wdtime = 0;
+	outext = "";
+	dt_old = dt;
 }	
    	if(task.contentEquals("Enter"))
    	{
@@ -119,8 +122,12 @@ if(dt_old != dt )
    	}
 
     } while(cursor.moveToNext());
-	  
-	   aa.notifyDataSetChanged();       
+	
+	  outext += "Время за день: " + sdf.format(wdtime - 3 * 60 * 60 * 1000);  
+	  TimePoint newItem = new TimePoint( new Date(created),outext);
+	  tpItems.add(0, newItem);	  
+	
+		aa.notifyDataSetChanged();       
         
     }
 }
