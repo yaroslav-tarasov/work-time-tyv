@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.TimeZone;
 
 import com.tyv.worktime.R;
 
@@ -121,7 +122,7 @@ public class WT extends Activity {
        //.setShortcut('1', 'd')
        .setIcon(android.R.drawable.ic_dialog_info);
        base++;
-       MenuItem item2 = menu.add(1,base,base,"Подробный отчет2")
+       MenuItem item2 = menu.add(1,base,base,"Суммарно за день")
        //.setShortcut('1', 'd')
        .setIcon(android.R.drawable.ic_dialog_info);    
        
@@ -237,8 +238,9 @@ public class WT extends Activity {
         //outext +=  " wdtime= " +wdtime +  "\n"; 
         
 	    SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
-	    
-        outext += "Время за день: " + sdf.format(wdtime - 3 * 60 * 60 * 1000);  
+	    TimeZone  timeZone = TimeZone.getDefault();
+	    int offset = timeZone.getOffset( System.currentTimeMillis() );
+        outext += "Время за день: " + sdf.format(wdtime - offset + 1*60*60*1000);  
         tTextOut.setText(outext);
         return ret;
     };

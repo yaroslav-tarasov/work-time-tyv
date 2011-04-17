@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ListIterator;
+import java.util.TimeZone;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -88,6 +89,8 @@ long stoptp = now.getTime();
 Date dt_old = null;
 long created = 0;
 SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
+TimeZone  timeZone = TimeZone.getDefault();
+int offset = timeZone.getOffset( System.currentTimeMillis() );
 
 	  if (cursor.moveToFirst())
 	    do { 
@@ -103,7 +106,7 @@ if(dt_old == null )
 
 if(dt_old.getDate() != dt.getDate())
 {
-	outext += "Время за день: " + sdf.format(wdtime - 3 * 60 * 60 * 1000);  
+	outext += "Время за день: " + sdf.format(wdtime - offset + 1*60*60*1000);  
 	TimePoint newItem = new TimePoint( dt_old,outext);
 	tpItems.add(0, newItem);
 	wdtime = 0;
