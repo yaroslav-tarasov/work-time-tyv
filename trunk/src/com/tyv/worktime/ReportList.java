@@ -12,9 +12,16 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
+import java.lang.StringBuilder;
 
 public class ReportList extends Activity {
     private static final String TAG = "ReportList";
@@ -71,66 +78,82 @@ public class ReportList extends Activity {
         
         myListView = (ListView)findViewById(R.id.myListView);
         myEditText = (EditText)findViewById(R.id.myEditText);
+        
 
+        
         tpItems = new ArrayList<TimePoint>();
         int resID = R.layout.tplist_item;
         aa = new TimePointAdapter(this, resID, tpItems);
         myListView.setAdapter(aa);        
-      
+        
+        myListView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                int position, long id) {
+              // When clicked, show a toast with the TextView text
+              // Toast.makeText(getApplicationContext(), ((TextView) ((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(0) ).getText() + "  " + String.valueOf(id) ,Toast.LENGTH_SHORT).show();
+ 
+            Toast.makeText(getApplicationContext(), tpItems.get((int) id).toString() + String.valueOf(id) ,Toast.LENGTH_SHORT).show();
+            //Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, new String[] {"date = " + tpItems.get((int) id).getDate()},
+            //		WorktimeProvider.DEFAULT_SORT_ORDER);
+              
+              
+            }
+          });      
       //cursor.requery();
 
 	  //tpItems.clear();
         
-String outext = "";
-Date now = new Date(); 
-long wdtime = 0;
-long starttp = 0;
-long stoptp = now.getTime(); 
-Date dt_old = null;
-long created = 0;
-SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
-TimeZone  timeZone = TimeZone.getDefault();
-int offset = timeZone.getOffset( System.currentTimeMillis() );
+	String outext = "";
+	Date now = new Date(); 
+	long wdtime = 0;
+	long starttp = 0;
+	long stoptp = now.getTime(); 
+	Date dt_old = null;
+	long created = 0;
+	SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
+	TimeZone  timeZone = TimeZone.getDefault();
+	int offset = timeZone.getOffset( System.currentTimeMillis() );
 
-	  if (cursor.moveToFirst())
-	    do { 
-	      String task = cursor.getString(cursor.getColumnIndex(WorktimeProvider.KEY_DETAILS));
-	      created = cursor.getLong(cursor.getColumnIndex(WorktimeProvider.KEY_DATE));
+if (cursor.moveToFirst())
+	do { 
+		String task = cursor.getString(cursor.getColumnIndex(WorktimeProvider.KEY_DETAILS));
+		created = cursor.getLong(cursor.getColumnIndex(WorktimeProvider.KEY_DATE));
 	      
-Date dt = new Date(created);
+		Date dt = new Date(created);
+		
+		if(dt_old == null )
+		{
+			dt_old = dt;
+		}
 
-if(dt_old == null )
-{
-	dt_old = dt;
-}
-
-if(dt_old.getDate() != dt.getDate())
-{
-	outext += "Время за день: " + sdf.format(wdtime - offset + 1*60*60*1000);  
-	TimePoint newItem = new TimePoint( dt_old,outext);
-	tpItems.add(0, newItem);
-	wdtime = 0;
-	outext = "";
-	dt_old = dt;
-}	
-   	if(task.contentEquals("Enter"))
-   	{
-   		starttp = dt.getTime();
-   		wdtime += stoptp - starttp;
-   	}
-   	else
-   	{
-   		stoptp = dt.getTime();
-
-   	}
+		if(dt_old.getDate() != dt.getDate())
+		{
+			outext += "Время за день: " + sdf.format(wdtime - offset );  //+ 1*60*60*1000
+			TimePoint newItem = new TimePoint( dt_old,outext);
+			tpItems.add(0, newItem);
+			wdtime = 0;
+			outext = "";
+			dt_old = dt;
+		}
+		
+		if(task.contentEquals("Enter"))
+		{
+			starttp = dt.getTime();
+			wdtime += stoptp - starttp;
+		}
+		else
+		{
+			stoptp = dt.getTime();
+		
+		}
 
     } while(cursor.moveToNext());
 	
-	  outext += "Время за день: " + sdf.format(wdtime - 3 * 60 * 60 * 1000);  
+	  outext += "Время за день: " + sdf.format(wdtime - offset);  //3 * 60 * 60 * 1000
 	  TimePoint newItem = new TimePoint( new Date(created),outext);
 	  tpItems.add(0, newItem);	  
-	
-		aa.notifyDataSetChanged();       
+	  
+	  aa.notifyDataSetChanged();       
         
     }
 }
